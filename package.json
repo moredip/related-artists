@@ -4,7 +4,13 @@
   "description": "a simple node app for browsing related artists using the spotify API",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Pete Hodgson"
+  "author": "Pete Hodgson",
+  "dependencies": {
+    "JSONStream": "^1.1.1",
+    "request": "^2.69.0",
+    "rxjs": "^5.0.0-beta.2"
+  }
 }
