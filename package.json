@@ -1,0 +1,10 @@
+{
+  "name": "related-artists",
+  "version": "1.0.0",
+  "description": "a simple node app for browsing related artists using the spotify API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Pete Hodgson"
+}
