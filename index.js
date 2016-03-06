@@ -17,11 +17,13 @@ const server = http.createServer( function(req,res) {
     artistName = "Taylor Swift";
   }
 
-  const relatedArtists = spotify.searchForArtist(artistName)
+  const relatedArtists$ = spotify.searchForArtist(artistName)
     .take(1)
     .flatMap(spotify.relatedArtists);
 
-  observableToStream( relatedArtists.map( (a) => `<li>${a.name}</li>` ), res );
+  const html$ = relatedArtists$.map( (a) => `<li>${a.name}</li>` );
+
+  observableToStream( html$, res );
 });
 
 
