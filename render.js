@@ -4,17 +4,6 @@ module.exports = {
   artistAndRelatedArtists: renderArtistAndRelatedArtists
 };
 
-function wrapped(above,content,below){
-  above = above || "";
-  below = below || "";
-
-  return Rx.Observable.concat(
-    Rx.Observable.of(above),
-    content,
-    Rx.Observable.of(below)
-  );
-}
-
 function renderArtistAndRelatedArtists(artist,relatedArtists){
   return wrapped(
     `<body><h1>Artist: ${artist.name}</h1>`,
@@ -48,6 +37,17 @@ function renderRelatedArtistAndTracks(artistPlusTracks){
     `<div><h3>${artistPlusTracks.artist.name}</h3>`,
     renderTracks(artistPlusTracks.tracks),
     "</div>"
+  );
+}
+
+function wrapped(above,content,below){
+  above = above || "";
+  below = below || "";
+
+  return Rx.Observable.concat(
+    Rx.Observable.of(above),
+    content,
+    Rx.Observable.of(below)
   );
 }
 

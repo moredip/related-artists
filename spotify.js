@@ -10,27 +10,32 @@ module.exports = {
   sampleTracksFromArtistsRelatedTo: sampleTracksFromArtistsRelatedTo
 };
 
-function searchForArtist(artistName){
-  const artistsStream = request.get(urls.artistSearch(artistName))
-      .pipe(JSONStream.parse("artists.items"));
+function JSONFromUrl(url,jsonPath){
+  const stream = request.get(url)
+      .pipe(JSONStream.parse(jsonPath));
 
-  return observableFromStream(artistsStream)
-    .flatMap(Rx.Observable.fromArray);
+  return observableFromStream(stream);
+}
+
+function searchForArtist(artistName){
+  return JSONFromUrl(
+    urls.artistSearch(artistName),
+    "artists.items.*"
+  );
 }
 
 function artistsRelatedTo(artist){
-  const artistsStream = 
-    request.get(urls.artistsRelatedTo(artist.id))
-      .pipe(JSONStream.parse("artists.*"));
-
-  return observableFromStream(artistsStream);
+  return JSONFromUrl(
+    urls.artistsRelatedTo(artist.id),
+    "artists.*"
+  );
 }
 
 function topTracksFor(artist){
-  const tracksStream = request.get(urls.topTracksFor(artist.id))
-    .pipe(JSONStream.parse("tracks.*"));
-
-  return observableFromStream(tracksStream);
+  return JSONFromUrl(
+    urls.topTracksFor(artist.id),
+    "tracks.*"
+  );
 }
 
 function sampleTracksFromArtistsRelatedTo(artist){
@@ -43,10 +48,3 @@ function sampleTracksFromArtistsRelatedTo(artist){
     };
   });
 }
-
-
-//const firstArtistSearchResult = searchForArtist(artistName).take(1);
-
-//firstArtistSearchResult
-  //.flatMap( sampleTracksFromArtistsRelatedTo )
-  //.subscribe( (_)=> console.log(_) );
