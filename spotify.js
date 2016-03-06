@@ -7,14 +7,15 @@ const observableFromStream = require('./observable-from-node-stream');
 
 module.exports = {
   searchForArtist: searchForArtist,
+  relatedArtists: artistsRelatedTo,
   sampleTracksFromArtistsRelatedTo: sampleTracksFromArtistsRelatedTo
 };
 
 function JSONFromUrl(url,jsonPath){
-  const stream = request.get(url)
+  const nodeStream = request.get(url)
       .pipe(JSONStream.parse(jsonPath));
 
-  return observableFromStream(stream);
+  return observableFromStream(nodeStream);
 }
 
 function searchForArtist(artistName){
